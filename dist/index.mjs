@@ -8,7 +8,10 @@ var SlidingWindowExecutor = class {
   }
   async loadScript() {
     if (this.scriptLoaded) return;
-    const scriptPath = path.join(__dirname, "..", "scripts", "slidingWindow.lua");
+    let scriptPath = path.join(__dirname, "..", "scripts", "slidingWindow.lua");
+    if (!fs.existsSync(scriptPath)) {
+      scriptPath = path.join(__dirname, "scripts", "slidingWindow.lua");
+    }
     const script = fs.readFileSync(scriptPath, "utf8");
     this.redis.defineCommand("slidingWindowExecutorCommand", {
       numberOfKeys: 1,
@@ -64,7 +67,7 @@ function rateLimit(config) {
   const window = config.window;
   const limit = config.limit;
   const feature = config.feature;
-  const identifierFn = config.identifier || ((req) => req.ip);
+  const identifierFn = config.identifier || ((req) => req.ip || "unknown_ip");
   return async function(req, res, next) {
     try {
       await scriptReady;

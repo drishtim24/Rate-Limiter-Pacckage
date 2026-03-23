@@ -13,7 +13,10 @@ export class SlidingWindowExecutor {
   async loadScript() {
     if (this.scriptLoaded) return;
     
-    const scriptPath = path.join(__dirname, "..", "scripts", "slidingWindow.lua")
+    let scriptPath = path.join(__dirname, "..", "scripts", "slidingWindow.lua");
+    if (!fs.existsSync(scriptPath)) {
+      scriptPath = path.join(__dirname, "scripts", "slidingWindow.lua");
+    }
     const script = fs.readFileSync(scriptPath, "utf8")
 
     this.redis.defineCommand("slidingWindowExecutorCommand", {

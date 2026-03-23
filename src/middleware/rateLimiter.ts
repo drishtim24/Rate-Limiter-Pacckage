@@ -16,7 +16,7 @@ export function rateLimit(config: RateLimitConfig) {
   const feature = config.feature
 
   const identifierFn =
-    config.identifier || ((req: Request) => req.ip)
+    config.identifier || ((req: Request) => req.ip || "unknown_ip")
 
   return async function (req: Request, res: Response, next: NextFunction) {
 
