@@ -1,0 +1,42 @@
+{
+  "name": "usage-guard",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean && copyfiles -u 2 src/scripts/*.lua dist/scripts",
+    "dev": "tsup src/index.ts --watch",
+    "test": "tsx test/test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ioredis": "^5.10.0",
+    "nanoid": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.25",
+    "@types/node": "^25.3.5",
+    "copyfiles": "^2.4.1",
+    "express": "^5.2.1",
+    "ioredis-mock": "^8.13.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "express": "^4 || ^5"
+  }
+}
